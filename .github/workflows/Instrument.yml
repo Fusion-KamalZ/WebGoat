@@ -48,7 +48,7 @@ jobs:
           "@ | Out-File -FilePath $env:FusionLiteServerKeyFilePath -Encoding ascii
 
           
-          icacls $FusionLiteServerKeyFilePath /inheritance:d
+          icacls $env:FusionLiteServerKeyFilePath /inheritance:d
         
           # Explicitly remove dangerous groups
           icacls  $env:FusionLiteServerKeyFilePath /remove "NT AUTHORITY\Authenticated Users"
