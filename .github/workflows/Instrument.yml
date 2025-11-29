@@ -42,6 +42,7 @@ jobs:
     - name: keycopy
       run: |
          echo "$env:FusionLiteServerKeyFile" > FusionLiteServerKeyFile
+         icacls FusionLiteServerKeyFile /inheritance:d /remove:g "Users" "Authenticated Users" "Administrators" "SYSTEM"
       
     - name: Clean Project
       run: |
