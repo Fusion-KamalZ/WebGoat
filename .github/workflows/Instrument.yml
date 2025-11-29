@@ -41,9 +41,17 @@ jobs:
 
     - name: keycopy
       run: |
-         echo "$env:FusionLiteServerKeyFile" > FusionLiteServerKeyFile
-         icacls FusionLiteServerKeyFile /inheritance:d /remove:g "Users" "NT AUTHORITY\Authenticated Users"
-         icacls FusionLiteServerKeyFile /grant:r "$($env:username):(R,W)"
+          echo "$env:FusionLiteServerKeyFile" > FusionLiteServerKeyFile
+          icacls FusionLiteServerKeyFile /inheritance:d
+        
+          # Explicitly remove dangerous groups
+          icacls FusionLiteServerKeyFile /remove "NT AUTHORITY\Authenticated Users"
+          icacls FusionLiteServerKeyFile /remove "BUILTIN\Users"
+          icacls FusionLiteServerKeyFile /remove "Everyone"
+        
+          # Grant ONLY the current runner service account
+          icacls FusionLiteServerKeyFile /grant:r "$($env:UserName):R"
+
       
     - name: Clean Project
       run: |
