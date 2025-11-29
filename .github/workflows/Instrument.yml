@@ -41,7 +41,11 @@ jobs:
 
     - name: keycopy
       run: |
-          echo "$env:FusionLiteServerKeyFile" > FusionLiteServerKeyFile
+          #echo "$env:FusionLiteServerKeyFile" > FusionLiteServerKeyFile
+          @"
+          $env:FusionLiteServerKeyFile
+          "@ | Out-File -FilePath FusionLiteServerKeyFile -Encoding ascii
+
           icacls FusionLiteServerKeyFile /inheritance:d
         
           # Explicitly remove dangerous groups
